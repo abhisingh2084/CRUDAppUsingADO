@@ -19,6 +19,77 @@ namespace CRUDAppUsingADO.Controllers
             return View(emps);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Employees emp)
+        {
+            try
+            {
+                dal.AddEmployee(emp);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+           
+        }
+
+
+        public IActionResult Edit(int id)
+        {
+            Employees emp = dal.getEmployeeByID(id);
+            return View(emp);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Employees emp)
+        {
+            try
+            {
+                dal.UpdateEmployee(emp);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+        public IActionResult Details(int id)
+        {
+            Employees emp = dal.getEmployeeByID(id);
+            return View(emp);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            Employees emp = dal.getEmployeeByID(id);
+            return View(emp);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Employees emp)
+        {
+            try
+            {
+                dal.DeleteEmployee(emp.Id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View(emp.Id);
+            }
+
+        }
+
         public IActionResult Privacy()
         {
             return View();
